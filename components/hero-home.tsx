@@ -1,13 +1,27 @@
-import Image from "next/image";
-import PageIllustration from "@/components/page-illustration";
-import Avatar01 from "@/public/images/avatar-01.jpg";
-import Avatar02 from "@/public/images/avatar-02.jpg";
-import Avatar03 from "@/public/images/avatar-03.jpg";
-import Avatar04 from "@/public/images/avatar-04.jpg";
-import Avatar05 from "@/public/images/avatar-05.jpg";
-import Avatar06 from "@/public/images/avatar-06.jpg";
+'use client'
+
+import { useState } from 'react'
+import Image from "next/image"
+import PageIllustration from "@/components/page-illustration"
+import Avatar01 from "@/public/images/avatar-01.jpg"
+import Avatar02 from "@/public/images/avatar-02.jpg"
+import Avatar03 from "@/public/images/avatar-03.jpg"
+import Avatar04 from "@/public/images/avatar-04.jpg"
+import Avatar05 from "@/public/images/avatar-05.jpg"
+import Avatar06 from "@/public/images/avatar-06.jpg"
 
 export default function HeroHome() {
+  const [email, setEmail] = useState('')
+  const [isSubmitted, setIsSubmitted] = useState(false)
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+    // Here you would typically send the email to your backend service
+    console.log('Submitted email:', email)
+    setIsSubmitted(true)
+    setEmail('')
+  }
+
   return (
     <section className="relative">
       <PageIllustration />
@@ -33,35 +47,35 @@ export default function HeroHome() {
                   src={Avatar02}
                   width={32}
                   height={32}
-                  alt="Avatar 01"
+                  alt="Avatar 02"
                 />
                 <Image
                   className="box-content rounded-full border-2 border-gray-50"
                   src={Avatar03}
                   width={32}
                   height={32}
-                  alt="Avatar 02"
+                  alt="Avatar 03"
                 />
                 <Image
                   className="box-content rounded-full border-2 border-gray-50"
                   src={Avatar04}
                   width={32}
                   height={32}
-                  alt="Avatar 03"
+                  alt="Avatar 04"
                 />
                 <Image
                   className="box-content rounded-full border-2 border-gray-50"
                   src={Avatar05}
                   width={32}
                   height={32}
-                  alt="Avatar 04"
+                  alt="Avatar 05"
                 />
                 <Image
                   className="box-content rounded-full border-2 border-gray-50"
                   src={Avatar06}
                   width={32}
                   height={32}
-                  alt="Avatar 05"
+                  alt="Avatar 06"
                 />
               </div>
             </div>
@@ -87,23 +101,44 @@ export default function HeroHome() {
                   data-aos="zoom-y-out"
                   data-aos-delay={450}
                 >
-                  <a
-                    className="btn group mb-4 w-full bg-gradient-to-t from-blue-600 to-blue-500 bg-[length:100%_100%] bg-[bottom] text-white shadow hover:bg-[length:100%_150%] sm:mb-0 sm:w-auto"
-                    href="#0" target="_blank"
-                  >
-                    <span className="relative inline-flex items-center">
-                      Prototype{" "}
-                      <span className="ml-1 tracking-normal text-blue-300 transition-transform group-hover:translate-x-0.5">
-                        -&gt;
-                      </span>
-                    </span>
-                  </a>
-                  <a
-                    className="btn w-full bg-white text-gray-800 shadow hover:bg-gray-50 sm:ml-4 sm:w-auto"
-                    href="#0"
-                  >
-                    Docs
-                  </a>
+                  {isSubmitted ? (
+                    <div className="space-y-4">
+                      <div className="text-lg font-semibold text-green-600">
+                        Thank you for subscribing to our waitlist!
+                      </div>
+                      <div className="flex justify-center space-x-4">
+                        <a
+                          href="#0"
+                          className="btn bg-blue-600 text-white hover:bg-blue-700"
+                        >
+                          Prototype
+                        </a>
+                        <a
+                          href="#0"
+                          className="btn bg-gray-900 text-white hover:bg-gray-800"
+                        >
+                          Docs
+                        </a>
+                      </div>
+                    </div>
+                  ) : (
+                    <form onSubmit={handleSubmit} className="sm:flex">
+                      <input
+                        type="email"
+                        placeholder="Enter your email"
+                        className="w-full rounded-l-md border border-gray-300 px-4 py-2 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200 sm:w-64"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        required
+                      />
+                      <button
+                        type="submit"
+                        className="mt-3 w-full rounded-r-md bg-gradient-to-t from-blue-600 to-blue-500 px-6 py-2 text-white transition-all hover:bg-[length:100%_150%] sm:mt-0 sm:w-auto"
+                      >
+                        Join Waitlist
+                      </button>
+                    </form>
+                  )}
                 </div>
               </div>
             </div>
@@ -139,5 +174,5 @@ export default function HeroHome() {
         </div>
       </div>
     </section>
-  );
+  )
 }
