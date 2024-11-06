@@ -89,7 +89,7 @@ export default function HeroHome() {
                 >
                   <a
                     className="btn group mb-4 w-full bg-gradient-to-t from-blue-600 to-blue-500 bg-[length:100%_100%] bg-[bottom] text-white shadow hover:bg-[length:100%_150%] sm:mb-0 sm:w-auto"
-                    href="https://www.figma.com/design/aZcwjAABuN8zZRerIG9nFb/Web3-UI-Components---Project-WAIFU" target="_blank"
+                    href="#0" target="_blank"
                   >
                     <span className="relative inline-flex items-center">
                       Prototype{" "}
@@ -122,12 +122,12 @@ export default function HeroHome() {
               </div>
               <div className="font-mono text-gray-500 [&_span]:opacity-0">
                 <span className="animate-[code-1_10s_infinite] text-gray-200">
-                npx waifu@latest init
+                npm i waifu@latest init
                 </span>{" "}
                 <br />
                 <br />
                 <span className="animate-[code-2_10s_infinite] text-gray-200">
-                npx waifu@latest add   
+                npm i waifu@latest add   
                 </span>{" "}
                 <span className="animate-[code-3_10s_infinite]">
                 component-name
