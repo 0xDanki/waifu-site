@@ -13,14 +13,37 @@ import Avatar06 from "@/public/images/avatar-06.jpg"
 export default function HeroHome() {
   const [email, setEmail] = useState('')
   const [isSubmitted, setIsSubmitted] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState('')
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    // Here you would typically send the email to your backend service
-    console.log('Submitted email:', email)
-    setIsSubmitted(true)
-    setEmail('')
+    setIsLoading(true)
+    setError('')
+
+    try {
+      const response = await fetch('/api/subscribe', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email }),
+      })
+
+      if (response.ok) {
+        setIsSubmitted(true)
+        setEmail('')
+      } else {
+        const data = await response.json()
+        setError(data.error || 'An error occurred. Please try again.')
+      }
+    } catch (err) {
+      setError('An error occurred. Please try again.')
+    } finally {
+      setIsLoading(false)
+    }
   }
+
 
   return (
     <section className="relative">
@@ -133,12 +156,14 @@ export default function HeroHome() {
                       />
                       <button
                         type="submit"
-                        className="mt-3 w-full rounded-r-md bg-gradient-to-t from-blue-600 to-blue-500 px-6 py-2 text-white transition-all hover:bg-[length:100%_150%] sm:mt-0 sm:w-auto"
+                        className="mt-3 w-full rounded-r-md bg-gradient-to-t from-blue-600 to-blue-500 px-6 py-2 text-white transition-all hover:bg-[length:100%_150%] sm:mt-0 sm:w-auto disabled:opacity-50"
+                        disabled={isLoading}
                       >
-                        Join Waitlist
+                        {isLoading ? 'Joining...' : 'Join Waitlist'}
                       </button>
                     </form>
                   )}
+                  {error && <p className="mt-2 text-sm text-red-600">{error}</p>}
                 </div>
               </div>
             </div>
